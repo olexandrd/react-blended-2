@@ -19,9 +19,8 @@ import { Text } from 'components';
 реалізуй додавання тудушки та відображення їх списку. Застосунок повинен
 зберігати тудушки між різними сесіями (оновлення сторінки).
 
-Використовуйте готову структуру форми з компонента `<Form/>`
-який приймає один проп `onSubmit` - функцію для передачі значення інпута під час
-сабміту форми.
+Використовуйте готову структуру форми з компонента `<Form/>` який приймає один
+проп `onSubmit` - функцію для передачі значення інпута під час сабміту форми.
 
 ```jsx
 <form className={style.form}>
@@ -42,8 +41,8 @@ import { Text } from 'components';
 `state`, що зберігається в батьківському компоненті `<Todos/>`, обов'язково
 повинен бути наступного вигляду.
 
-```bash
-  const [todos, setTodos] = useState([]);
+```js
+const [todos, setTodos] = useState([]);
 ```
 
 Кожна todo повинна бути об'єктом з властивостями `text` та `id`. Для генерації
@@ -74,15 +73,15 @@ import { Text } from 'components';
 одного елемента списку потрбно використати універсальний компонент `<GridItem/>`
 
 ```jsx
-  <div className={style.box}>
-    <Text textAlign="center" marginBottom="20">
-      TODO #1
-    </Text>
-    <Text>Some description</Text>
-    <button className={style.deleteButton} type="button">
-      <RiDeleteBinLine size={24} />
-    </button>
-  </div>
+<div className={style.box}>
+  <Text textAlign="center" marginBottom="20">
+    TODO #1
+  </Text>
+  <Text>Some description</Text>
+  <button className={style.deleteButton} type="button">
+    <RiDeleteBinLine size={24} />
+  </button>
+</div>
 ```
 
 ## Крок 2

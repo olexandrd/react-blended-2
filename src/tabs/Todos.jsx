@@ -1,15 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { nanoid } from 'nanoid';
-import { Text, Form, TodoList } from 'components';
+import { useLocalStorage } from 'hooks/useLocalStorage';
+import { Text, Form, TodoList, EditForm } from 'components';
 
 export const Todos = () => {
-  const [todos, setTodos] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem('todos')) ?? [];
-    } catch (error) {
-      return [];
-    }
-  });
+  const [todos, setTodos] = useLocalStorage('todos', []);
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentTodo, setCurrentTodo] = useState({});
 
   const onSubmit = text => {
     const toDo = {
@@ -22,15 +19,43 @@ export const Todos = () => {
   const deleteTodo = id => {
     setTodos(prev => prev.filter(todo => todo.id !== id));
   };
-  useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos));
-  }, [todos]);
+
+  const editToDo = todo => {
+    setCurrentTodo(todo);
+    setIsEditing(true);
+  };
+
+  const updateTodos = text => {
+    setTodos(prevState =>
+      prevState.map(todo =>
+        todo.id === currentTodo.id ? { ...currentTodo, text } : todo,
+      ),
+    );
+    cancelUpdate();
+  };
+
+  const cancelUpdate = () => {
+    setIsEditing(false);
+    setCurrentTodo({});
+  };
 
   return (
     <>
-      <Form onSubmit={onSubmit} />
-      <TodoList todos={todos} deleteTodo={deleteTodo} />
-      <Text textAlign="center">There are no any todos ...</Text>
+      {isEditing ? (
+        <EditForm
+          defaultValue={currentTodo.text}
+          updateTodos={updateTodos}
+          cancelUpdate={cancelUpdate}
+        />
+      ) : (
+        <Form onSubmit={onSubmit} />
+      )}
+
+      {todos.length > 0 ? (
+        <TodoList todos={todos} deleteTodo={deleteTodo} editToDo={editToDo} />
+      ) : (
+        <Text textAlign="center">There are no any todos ...</Text>
+      )}
     </>
   );
 };

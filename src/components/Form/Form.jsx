@@ -13,7 +13,7 @@ export const Form = ({ onSubmit }) => {
   const handleSubmit = e => {
     e.preventDefault();
     if (!input.trim()) {
-      toast.error('Add search query!', { icon: '🔍' });
+      toast.error('Add todo text!');
       return;
     }
     onSubmit(input.trim());

@@ -1,3 +1,5 @@
-export const PhotosGalleryItem = () => {
-  return <h3>PhotosGalleryItem</h3>;
+import { GridItem } from 'components';
+
+export const PhotosGalleryItem = ({ item }) => {
+  return item.src && <GridItem item={item} />;
 };
